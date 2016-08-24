@@ -12,7 +12,6 @@ name := "simple-arguments"
   * The version must match "&#94;(\\d+\\.\\d+\\.\\d+)$" to be considered a release
   */
 version := "1.0.3"
-description := "A simple library fro parsing command line arguments."
 
 scalaVersion := "2.11.8"
 
@@ -39,20 +38,26 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.5" % Test
 publishMavenStyle := true
 pomIncludeRepository := { _ => false }
 pomExtra := (
-  <url>N/A</url>
+    <name>${organization}:${name}</name>
+    <description>A simple library for parsing command line arguments.</description>
+    <url>https://github.com/audienceproject/simple-arguments</url>
     <licenses>
         <license>
-            <name>N/A</name>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
         </license>
     </licenses>
     <scm>
-        <url>git@bitbucket.org:AudienceReportTeam/internal-util-scala.git</url>
-        <connection>scm:git@bitbucket.org:AudienceReportTeam/internal-util-scala.git</connection>
+        <url>git@github.com:audienceproject/simple-arguments.git</url>
+        <connection>scm:git:git//github.com/audienceproject/simple-arguments.git</connection>
+        <developerConnection>scm:git:ssh://github.com:audienceproject/simple-arguments.git</developerConnection>
     </scm>
     <developers>
         <developer>
             <id>audienceproject</id>
-            <name>AudienceProject Team</name>
-            <url>http://www.audienceproject.com</url>
+            <email>adtdev@audienceproject.com</email>
+            <name>AudienceProject Dev</name>
+            <organization>AudienceProject</organization>
+            <organizationUrl>http://www.audienceproject.com</organizationUrl>
         </developer>
     </developers>)
