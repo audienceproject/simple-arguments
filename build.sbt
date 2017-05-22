@@ -17,12 +17,12 @@ name := "simple-arguments"
 version := "1.0.1"
 description := "A simple library for parsing command line arguments."
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.2"
 
 /**
   * Additional scala version supported.
   */
-crossScalaVersions := Seq("2.10.6", "2.11.8")
+crossScalaVersions := Seq("2.10.6", "2.11.11", "2.12.2")
 
 /**
   * Fix for plugin sbt-testng-interface (wrong URL)
@@ -34,7 +34,7 @@ resolvers += Resolver.url("fix-sbt-plugin-releases", url("https://dl.bintray.com
   * Dependencies for the whole project
   */
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.5" % Test
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.3" % Test
 
 assemblyJarName in assembly := name.value + ".jar"
 
