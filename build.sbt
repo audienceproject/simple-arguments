@@ -14,7 +14,7 @@ name := "simple-arguments"
 /**
   * The version must match "&#94;(\\d+\\.\\d+\\.\\d+)$" to be considered a release
   */
-version := "1.0.1"
+version := "1.0.2"
 description := "A simple library for parsing command line arguments."
 
 scalaVersion := "2.12.2"
