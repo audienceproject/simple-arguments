@@ -23,7 +23,7 @@ class ArgumentsTest extends FunSuite {
         " calling getOption on the key should return the defined corresponding value") {
         implicit val sample: Array[String] = Array[String]("--akey", "justavalue")
         val arguments = new Arguments
-        assert(arguments.get("akey").equals("justavalue"))
+        assert(arguments.get("akey") === "justavalue")
     }
 
     test("When provided with an array of two arguments where the first start with -- and the second is a" +
