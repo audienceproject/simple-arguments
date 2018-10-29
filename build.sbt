@@ -17,7 +17,7 @@ name := "simple-arguments"
 version := "1.0.2"
 description := "A simple library for parsing command line arguments."
 
-scalaVersion := "2.12.6"
+scalaVersion := "2.11.12"
 
 /**
   * Additional scala version supported.

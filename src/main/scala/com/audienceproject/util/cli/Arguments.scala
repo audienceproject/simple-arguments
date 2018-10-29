@@ -6,20 +6,19 @@ import scala.annotation.tailrec
 class Arguments(implicit args: Array[String]) {
 
     @tailrec
-    final def toPairs(base: Map[String, Option[String]], iterator: BufferedIterator[String]): Map[String, Option[String]] = {
-        iterator.headOption match {
+    final def toPairs(base: Map[String, Option[String]], arr: Array[String]): Map[String, Option[String]] = {
+        arr.headOption match {
             case Some(arg: String) =>
                 if (arg.matches("""^--.+$""")) {
-                    val k: String = iterator.next().substring(2)
-                    iterator.headOption match {
+                    val k: String = arg.substring(2)
+                    arr.tail.headOption match {
                         case Some(nextArg: String) =>
                             if (nextArg.matches("""^--.+$""")) {
-                                toPairs(base ++ Map(k -> None), iterator)
+                                toPairs(base ++ Map(k -> None), arr.tail)
                             } else {
-                                val v = iterator.next()
-                                toPairs(base ++ Map(k -> Option(v)), iterator)
+                                toPairs(base ++ Map(k -> Option(nextArg)), arr.tail.tail)
                             }
-                        case _ => toPairs(base ++ Map(k -> None), iterator)
+                        case _ => toPairs(base ++ Map(k -> None), arr.tail)
                     }
                 } else {
                     throw new IllegalArgumentException("Arguments need to be specified either in pairs where the key has two dashes in front of it (--)" +
@@ -29,7 +28,7 @@ class Arguments(implicit args: Array[String]) {
         }
     }
 
-    val arguments: Map[String, Option[String]] = toPairs(Map(), args.iterator.buffered)
+    val arguments: Map[String, Option[String]] = toPairs(Map(), args)
 
     /**
      * Get a list of [[String]] for a single CLI argument.
