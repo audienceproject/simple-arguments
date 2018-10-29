@@ -95,6 +95,37 @@ class Arguments(implicit args: Array[String]) {
     }
 
     /**
+      * Get a list of [[String]] for a single CLI argument.
+      * Comma `,` is used as a separator character.
+      * This is useful when you need to process an arguments passed as `--severalValues one,two,three`.
+      * Throws [[IllegalArgumentException]] if the key does not exist.
+      *
+      * Example:
+      * {{{
+      * import com.audienceproject.cli.Arguments
+      *
+      * object Test {
+      *
+      *     // args: Array("--severalValues", "one,two,three")
+      *     def main(implicit args: Array[String]) {
+      *         val arguments = new Arguments
+      *         // Returns Option[Seq[String]] = Some(WrappedArray(one, two, three))
+      *         arguments.getOptionArray("severalValues")
+      *     }
+      * }
+      * }}}
+      *
+      * @param key The argument key
+      */
+    def getArray(key: String ): Seq[String] = arguments.get(key) match {
+        case Some(maybeValue) => maybeValue match {
+            case Some(value) => value.split(""",""")
+            case _ => throw new IllegalArgumentException(s"There is no value set for key: $key")
+        }
+        case _ => throw new IllegalArgumentException(s"There is no value set for key: $key")
+    }
+
+    /**
      * Get the [[String]] value of an argument, or a user-provided [[String]] in case the
      * argument does not exist.
      * This is useful when you need to process an argument passed as `--aSetting someValue`.
@@ -211,9 +242,7 @@ class Arguments(implicit args: Array[String]) {
      *
      * @param key The argument key
      */
-    def isSet(key: String ): Boolean =
-        if ( ! arguments.keySet.contains(key)) false
-        else true
+    def isSet(key: String ): Boolean = arguments.keySet.contains(key)
 
     /**
      * Get the [[A]] value of an argument, or a user-provided [[A]] in case the
