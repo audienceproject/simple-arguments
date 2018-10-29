@@ -17,12 +17,12 @@ name := "simple-arguments"
 version := "1.0.2"
 description := "A simple library for parsing command line arguments."
 
-scalaVersion := "2.12.2"
+scalaVersion := "2.12.6"
 
 /**
   * Additional scala version supported.
   */
-crossScalaVersions := Seq("2.10.6", "2.11.11", "2.12.2")
+crossScalaVersions := Seq("2.11.12", "2.12.6")
 
 /**
   * Fix for plugin sbt-testng-interface (wrong URL)
