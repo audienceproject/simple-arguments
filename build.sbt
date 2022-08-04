@@ -22,7 +22,7 @@ scalaVersion := "2.11.12"
 /**
   * Additional scala version supported.
   */
-crossScalaVersions := Seq("2.11.12", "2.12.6")
+crossScalaVersions := Seq("2.11.12", "2.12.14","2.13.6")
 
 /**
   * Fix for plugin sbt-testng-interface (wrong URL)
@@ -34,32 +34,31 @@ resolvers += Resolver.url("fix-sbt-plugin-releases", url("https://dl.bintray.com
   * Dependencies for the whole project
   */
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.3" % Test
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.12" % Test
 
-assemblyJarName in assembly := name.value + ".jar"
+assembly / assemblyJarName := name.value + ".jar"
 
 /**
   * Maven specific settings for publishing to support Maven native projects
   */
 publishMavenStyle := true
-publishArtifact in Test := false
-pomIncludeRepository := { _ => false }
-publishTo <<= version { (v: String) =>
+Test / publishArtifact := false
+publishTo := {
     val nexus = "https://oss.sonatype.org/"
-    if (v.trim.endsWith("SNAPSHOT"))
+    if (version.value.trim.endsWith("SNAPSHOT"))
         Some("snapshots" at nexus + "content/repositories/snapshots")
     else
         Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-                      }
+}
+
 val publishSnapshot:Command = Command.command("publishSnapshot") { state =>
     val extracted = Project extract state
     import extracted._
     val currentVersion = getOpt(version).get
-    val newState =
-        Command.process(s"""set version := "$currentVersion-SNAPSHOT" """, state)
-    val (s, _) = Project.extract(newState).runTask(PgpKeys.publishSigned in Compile, newState)
+    val newState = extracted.appendWithoutSession(Seq(version := s"$currentVersion-SNAPSHOT"), state)
+    Project.extract(newState).runTask(Compile / PgpKeys.publishSigned, newState)
     state
-                                                                 }
+}
 commands ++= Seq(publishSnapshot)
 pomIncludeRepository := { _ => false }
 pomExtra := (

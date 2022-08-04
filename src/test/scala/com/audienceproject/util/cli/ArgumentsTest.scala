@@ -1,8 +1,9 @@
 package com.audienceproject.util.cli
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
-class ArgumentsTest extends FunSuite {
+
+class ArgumentsTest extends AnyFunSuite {
 
     test("When provided with an array of arguments that are in pairs where the first key starts with -- and the value follows" +
         " the instance should initialize correctly") {
